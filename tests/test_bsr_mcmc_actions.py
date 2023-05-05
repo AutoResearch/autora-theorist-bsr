@@ -1,6 +1,6 @@
 from typing import List, Union
 
-from src.autora.theorist.bsr.funcs import (
+from autora.theorist.bsr.funcs import (
     de_transform,
     get_all_nodes,
     grow,
@@ -9,8 +9,8 @@ from src.autora.theorist.bsr.funcs import (
     reassign_op,
     transform,
 )
-from src.autora.theorist.bsr.node import Node, NodeType, Optional
-from src.autora.theorist.bsr.prior import get_prior_dict
+from autora.theorist.bsr.node import Node, NodeType, Optional
+from autora.theorist.bsr.prior import get_prior_dict
 
 def _build_tree_from_literals(literals: List[Union[str, int]], **hyper_params):
     """
