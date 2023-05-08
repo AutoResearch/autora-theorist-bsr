@@ -9,5 +9,6 @@ nav:
 - How it works: 'how_it_works.md'
 - Meta parameters: 'meta_parameters.md'
 - Search space: 'search_space.md'
+- Quickstart: 'quick-start.md'
 - Examples:
     - Basic usage: 'basic-usage.ipynb'
