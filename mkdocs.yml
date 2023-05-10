@@ -5,10 +5,10 @@ site_name: AutoRA BSR Theorist
 repo_url: 'https://github.com/autoresearch/autora-theorist-bsr'
 
 nav:
-- Introduction: 'index.md'
-- How it works: 'how_it_works.md'
-- Meta parameters: 'meta_parameters.md'
-- Search space: 'search_space.md'
+- Home: 'index.md'
 - Quickstart: 'quick-start.md'
+- How it works: 'how-it-works.md'
+- Meta parameters: 'meta-parameters.md'
+- Search space: 'search-space.md'
 - Examples:
     - Basic usage: 'basic-usage.ipynb'

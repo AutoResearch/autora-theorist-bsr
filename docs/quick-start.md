@@ -10,7 +10,6 @@ You will need:
 pip install -U autora[theorist-bsr]
 ```
 
-
 Check your installation by running:
 ```shell
 python -c from autora.theorist.bsr import BSRRegressor; BSRRegressor() 
