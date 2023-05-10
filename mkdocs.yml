@@ -7,8 +7,8 @@ repo_url: 'https://github.com/autoresearch/autora-theorist-bsr'
 nav:
 - Home: 'index.md'
 - Quickstart: 'quick-start.md'
-- How it works: 'how-it-works.md'
-- Meta parameters: 'meta-parameters.md'
-- Search space: 'search-space.md'
+- How It Works: 'how-it-works.md'
+- Meta Parameters: 'meta-parameters.md'
+- Search Space: 'search-space.md'
 - Examples:
-    - Basic usage: 'basic-usage.ipynb'
+    - Basic Usage: 'basic-usage.ipynb'
