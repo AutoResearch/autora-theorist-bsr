@@ -3,7 +3,6 @@ name = "autora-theorist-bsr"
 description = "Bayesian Symbolic Regression theorist for AutoRA"
 authors = [
     { name = "Sida (Star) Li", email = "listar2000@uchicago.edu" },
-    { name = "Ben Andrew", email = "benwallaceandrew@gmail.com" },
 ]
 dynamic = ["version"]
 
