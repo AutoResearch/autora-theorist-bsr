@@ -1,6 +1,4 @@
-# Bayesian Symbolic Regression
-
-## Search space
+# Search space
 
 The following are built-in operators which constitute the search space:
 

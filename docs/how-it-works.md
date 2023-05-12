@@ -1,6 +1,4 @@
-# Bayesian Symbolic Regression
-
-## How it works
+# How it works
 
 Bayesian Symbolic Regression (BSR) has the following features:
 

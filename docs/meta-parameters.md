@@ -1,6 +1,4 @@
-# Bayesian Symbolic Regression
-
-## Meta-Parameters
+# Meta-Parameters
 
 Meta-Parameters are used to control the search space and the model configuration. In BSR, they are mainly defined in the theorist constructor (see `bsr.py`). Below is a basic overview of these parameters. Note, there are additional algorithm-irrelevant configurations that can be customized in the constructor; please refer to code documentation for their details.
 
