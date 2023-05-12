@@ -1,4 +1,4 @@
-# Search space
+# Search Space
 
 The following are built-in operators which constitute the search space:
 
