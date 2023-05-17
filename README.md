@@ -1,4 +1,4 @@
-# Bayesian Symbolic Regression
+# AutoRA Bayesian Symbolic Regression
 
 `autora-theorist-bsr` is a Python module built on AutoRA that can be used to discover equations that fit data.
 
