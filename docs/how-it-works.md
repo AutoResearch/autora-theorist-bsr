@@ -7,7 +7,7 @@ Bayesian Symbolic Regression (BSR) has the following features:
     - Leaf nodes (M): this assigns features to leaf nodes that are already defined from part **T**.
     - Operator parameters ($\Theta$): this uses a vector $\Theta$ to collect additional parameters for certain operators which require them (e.g. a linear operator `ln` with intercept and slope params).
 
-2. It specifies priors for each of the three parts above. `Autora`'s implementation of BSR allows users to either specify custom priors for part `T` or choose among a pre-specified set.
+2. It specifies priors for each of the three parts above. `AutoRA`'s implementation of BSR allows users to either specify custom priors for part `T` or choose among a pre-specified set.
 
 3. It defines `actions` that mutate one expression tree (`original`) into a new expression tree (`proposed`), and supports the calculation of transition probabilities based on the likelihoods of the `original` and `proposed` models.
 
