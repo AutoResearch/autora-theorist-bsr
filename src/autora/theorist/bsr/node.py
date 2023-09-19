@@ -98,7 +98,7 @@ class Node:
 
     def evaluate(
         self, X: Union[np.ndarray, pd.DataFrame], store_result: bool = False
-    ) -> np.array:
+    ) -> np.ndarray:
         """
         Evaluate the expression, as represented by an expression tree with `self` as the root,
         using the given data matrix `X`.
