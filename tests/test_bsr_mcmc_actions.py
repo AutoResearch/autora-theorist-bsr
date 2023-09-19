@@ -12,6 +12,7 @@ from autora.theorist.bsr.funcs import (
 from autora.theorist.bsr.node import Node, NodeType, Optional
 from autora.theorist.bsr.prior import get_prior_dict
 
+
 def _build_tree_from_literals(literals: List[Union[str, int]], **hyper_params):
     """
     Helper testing function that builds up a valid computation tree with a list of str/int inputs

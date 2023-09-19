@@ -212,7 +212,7 @@ def grow(
     ops_weight_lst: List[float],
     ops_priors: Dict[str, Dict],
     n_feature: int = 1,
-    **hyper_params
+    **hyper_params,
 ):
     """
     ACTION 2: Grow represents the action of growing a subtree from a given `node`
@@ -242,7 +242,7 @@ def grow(
             ops_weight_lst,
             ops_priors,
             n_feature,
-            **hyper_params
+            **hyper_params,
         )
         if node.node_type == NodeType.BINARY:
             grow(
@@ -251,7 +251,7 @@ def grow(
                 ops_weight_lst,
                 ops_priors,
                 n_feature,
-                **hyper_params
+                **hyper_params,
             )
 
 
@@ -309,7 +309,7 @@ def transform(
     ops_weight_lst: List[float],
     ops_priors: Dict[str, Dict],
     n_feature: int = 1,
-    **hyper_params: Dict
+    **hyper_params: Dict,
 ) -> Node:
     """
     ACTION 5: Transform inserts a middle node between the picked `node` and its
@@ -351,7 +351,7 @@ def transform(
             ops_weight_lst,
             ops_priors,
             n_feature,
-            **hyper_params
+            **hyper_params,
         )
 
     # make sure the depth property is updated correctly
@@ -366,7 +366,7 @@ def reassign_op(
     ops_weight_lst: List[float],
     ops_priors: Dict[str, Dict],
     n_feature: int = 1,
-    **hyper_params: Dict
+    **hyper_params: Dict,
 ):
     """
     ACTION 6: Re-assign action uniformly picks a non-terminal node, and assign a new operator.
@@ -403,7 +403,7 @@ def reassign_op(
             ops_weight_lst,
             ops_priors,
             n_feature,
-            **hyper_params
+            **hyper_params,
         )
     else:
         node.right = None
@@ -519,7 +519,7 @@ def prop(
     ops_weight_lst: List[float],
     ops_priors: Dict[str, Dict],
     n_feature: int = 1,
-    **hyper_params
+    **hyper_params,
 ):
     """
     Propose a new tree from an existing tree with root `node`.
@@ -572,7 +572,7 @@ def prop(
             ops_weight_lst,
             ops_priors,
             n_feature,
-            **hyper_params
+            **hyper_params,
         )
         if grown_node.node_type == NodeType.LEAF:
             q = q_inv = 1
@@ -688,7 +688,7 @@ def prop(
             ops_weight_lst,
             ops_priors,
             n_feature,
-            **hyper_params
+            **hyper_params,
         )
 
         if inserted_node.right:
@@ -737,7 +737,7 @@ def prop(
             ops_weight_lst,
             ops_priors,
             n_feature,
-            **hyper_params
+            **hyper_params,
         )
         new_type = reassign_node.node_type
         _, new_nterm_count, new_lt_count, _ = _get_tree_classified_counts(new_node)
