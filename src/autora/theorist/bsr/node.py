@@ -48,7 +48,7 @@ class Node:
         self.op_init = op_init
 
         # holding temporary calculation result, see `evaluate()`
-        self.result = None
+        self.result: Optional[np.ndarray] = None
         # params for additional inputs into `operator`
         self.params: Dict = {}
 
@@ -98,7 +98,7 @@ class Node:
 
     def evaluate(
         self, X: Union[np.ndarray, pd.DataFrame], store_result: bool = False
-    ) -> np.array:
+    ) -> np.ndarray:
         """
         Evaluate the expression, as represented by an expression tree with `self` as the root,
         using the given data matrix `X`.

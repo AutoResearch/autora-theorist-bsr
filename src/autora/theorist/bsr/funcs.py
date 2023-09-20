@@ -1,4 +1,5 @@
 import copy
+import random
 from enum import Enum
 from functools import wraps
 from typing import Callable, Dict, List, Optional, Tuple, Union, cast
@@ -228,10 +229,10 @@ def grow(
     depth = node.depth
     p = 1 / np.power((1 + depth), -hyper_params.get("beta", -1))
 
-    if depth > 0 and p < np.random.uniform(0, 1, 1):  # create leaf node
-        node.setup(feature=np.random.randint(0, n_feature, 1))
+    if depth > 0 and p < random.random():  # create leaf node
+        node.setup(feature=random.randint(0, n_feature - 1))
     else:
-        ops_name = np.random.choice(ops_name_lst, p=ops_weight_lst)
+        ops_name = random.choices(ops_name_lst, ops_weight_lst, k=1)
         ops_prior = ops_priors[ops_name]
         node.setup(ops_name, ops_prior, hyper_params=hyper_params)
 
@@ -264,7 +265,7 @@ def prune(node: Node, n_feature: int = 1):
         node: the tree node to be pruned
         n_feature: the number of features in input data
     """
-    node.setup(feature=np.random.randint(0, n_feature, 1))
+    node.setup(feature=random.randint(0, n_feature - 1))
 
 
 @check_empty
@@ -286,7 +287,7 @@ def de_transform(node: Node) -> Tuple[Node, Optional[Node]]:
     if node.node_type == NodeType.UNARY:
         return left, None
 
-    r = np.random.random()
+    r = random.random()
     right = cast(Node, node.right)
     # picked node is root
     if not node.depth:
@@ -331,7 +332,7 @@ def transform(
     parent = node.parent
 
     insert_node = Node(depth=node.depth, parent=parent)
-    insert_op = np.random.choice(ops_name_lst, 1, ops_weight_lst)[0]
+    insert_op = random.choices(ops_name_lst, ops_weight_lst, k=1)
     insert_node.setup(insert_op, ops_priors[insert_op], hyper_params=hyper_params)
 
     if parent:
@@ -388,7 +389,7 @@ def reassign_op(
 
     # store the original children and re-setup the `node`
     old_left, old_right = node.left, node.right
-    new_op = np.random.choice(ops_name_lst, 1, ops_weight_lst)[0]
+    new_op = random.choices(ops_name_lst, ops_weight_lst, k=1)
     node.setup(new_op, ops_priors[new_op], hyper_params=hyper_params)
 
     new_type = node.node_type
@@ -420,7 +421,7 @@ def reassign_feat(node: Node, n_feature: int = 1):
     """
     # make sure we have a leaf node
     assert node.node_type == NodeType.LEAF
-    node.setup(feature=np.random.randint(0, n_feature, 1))
+    node.setup(feature=random.randint(0, n_feature - 1))
 
 
 class Action(int, Enum):
@@ -466,7 +467,7 @@ class Action(int, Enum):
         weights.append(1 - sum(weights))  # p_reassign_feat
         assert weights[-1] >= 0
 
-        action = np.random.choice(np.arange(7), p=weights)
+        action = random.choices(range(7), weights=weights, k=1)[0]
         return action, weights
 
 
@@ -564,7 +565,7 @@ def prop(
     # q and q_inv simply equal the probability if the grown node is a leaf node
     # otherwise, we calculate new information of the `new_node` after the action is applied
     elif action == Action.GROW:
-        i = np.random.randint(0, len(term_nodes), 1)[0]
+        i = random.randint(0, len(term_nodes) - 1)
         grown_node: Node = term_nodes[i]
         grow(
             grown_node,
@@ -599,7 +600,7 @@ def prop(
                 expand_node = True
     # ACTION 3: PRUNE
     elif action == Action.PRUNE:
-        i = np.random.randint(0, len(nterm_nodes), 1)[0]
+        i = random.randint(0, len(nterm_nodes) - 1)
         pruned_node: Node = nterm_nodes[i]
         prune(pruned_node, n_feature)
         tree_ll, param_ll = calc_tree_ll(
@@ -623,7 +624,7 @@ def prop(
     # ACTION 4: DE_TRANSFORM
     elif action == Action.DE_TRANSFORM:
         num_de_trans = len(de_trans_nodes)
-        i = np.random.randint(0, num_de_trans, 1)[0]
+        i = random.randint(0, num_de_trans - 1)
         de_trans_node: Node = de_trans_nodes[i]
         replaced_node, discarded_node = de_transform(de_trans_node)
         par_node = de_trans_node.parent
@@ -680,7 +681,7 @@ def prop(
     # ACTION 5: TRANSFORM
     elif action == Action.TRANSFORM:
         all_nodes = get_all_nodes(new_node)
-        i = np.random.randint(0, len(all_nodes), 1)[0]
+        i = random.randint(0, len(all_nodes) - 1)
         trans_node: Node = all_nodes[i]
         inserted_node: Node = transform(
             trans_node,
@@ -727,7 +728,7 @@ def prop(
             q_inv = q_inv / 2
     # ACTION 6: REASSIGN OPERATION
     elif action == Action.REASSIGN_OP:
-        i = np.random.randint(0, len(nterm_nodes), 1)[0]
+        i = random.randint(0, len(nterm_nodes) - 1)
         reassign_node: Node = nterm_nodes[i]
         old_right = reassign_node.right
         old_op_name, old_type = reassign_node.op_name, reassign_node.node_type
@@ -779,7 +780,7 @@ def prop(
             shrink_node = True
     # ACTION 7: REASSIGN FEATURE
     else:
-        i = np.random.randint(0, len(term_nodes), 1)[0]
+        i = random.randint(0, len(term_nodes) - 1)
         reassign_node = term_nodes[i]
         reassign_feat(reassign_node, n_feature)
         q = q_inv = 1
@@ -920,7 +921,7 @@ def prop_new(
         log_r += np.log(max(1e-5, 1 / np.power(2, 2 * old_lt_count)))
 
     alpha = min(log_r, 0)
-    test = np.random.uniform(0, 1, 0)[0]
+    test = random.random()
     if np.log(test) >= alpha:  # no accept
         return False, root, sigma_y, sigma_a, sigma_b
     else:  # accept
