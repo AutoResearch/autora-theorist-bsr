@@ -132,7 +132,7 @@ class BSRRegressor(BaseEstimator, RegressorMixin):
             X = pd.DataFrame(X)
         train_errs: List[List[float]] = []
         roots: List[List[Node]] = []
-        betas: List[List[float]] = []
+        betas: List[np.ndarray] = []
         itr_num = self.itr_num
         k = self.tree_num
         beta = self.beta
