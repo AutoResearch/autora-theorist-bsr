@@ -48,7 +48,7 @@ class Node:
         self.op_init = op_init
 
         # holding temporary calculation result, see `evaluate()`
-        self.result = None
+        self.result: Optional[np.ndarray] = None
         # params for additional inputs into `operator`
         self.params: Dict = {}
 

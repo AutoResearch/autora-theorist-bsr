@@ -6,7 +6,7 @@ import numpy as np
 this file contains functions (operators) for actually carrying out the computations
 in our expression tree model. An operator can take in either 1 (unary) or 2 (binary)
 operands - corresponding to being used in a unary or binary node (see `node.py`). The
-operand(s) are recursively evaluated `np.array` from an operation or literal (in the
+operand(s) are recursively evaluated `np.ndarray` from an operation or literal (in the
 case of a leaf node) in downstream node(s).
 
 For certain operator, e.g. a linear operator, auxiliary parameters (slope/intercept)
@@ -16,19 +16,19 @@ initialized in `prior.py` by their specified initialization functions.
 
 
 # a linear operator with default `a` = 1 and `b` = 0 (i.e. identity operation)
-def linear_op(operand: np.ndarray, **params: Dict) -> np.ndarray:
-    a, b = params.get("a", 1), params.get("b", 0)
+def linear_op(operand: np.ndarray, **params: Dict[str, float]) -> np.ndarray:
+    a, b = params.get("a", 1.0), params.get("b", 0.0)
     return a * operand + b
 
 
 # a safe `exp` operation that has a cutoff (default = 1e-10) and avoids overflow
-def exp_op(operand: np.ndarray, **params: Dict) -> np.ndarray:
+def exp_op(operand: np.ndarray, **params: Dict[str, float]) -> np.ndarray:
     cutoff = params.get("cutoff", 1e-10)
     return 1 / (cutoff + np.exp(-operand))
 
 
 # a safe `inv` operation that has a cutoff (default = 1e-10) and avoids overflow
-def inv_op(operand: np.ndarray, **params: Dict) -> np.ndarray:
+def inv_op(operand: np.ndarray, **params: Dict[str, float]) -> np.ndarray:
     cutoff = params.get("cutoff", 1e-10)
     return 1 / (cutoff + operand)
 
