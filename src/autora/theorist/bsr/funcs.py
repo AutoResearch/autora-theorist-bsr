@@ -232,7 +232,7 @@ def grow(
     if depth > 0 and p < random.random():  # create leaf node
         node.setup(feature=random.randint(0, n_feature - 1))
     else:
-        ops_name = random.choices(ops_name_lst, ops_weight_lst, k=1)
+        ops_name = random.choices(ops_name_lst, ops_weight_lst, k=1)[0]
         ops_prior = ops_priors[ops_name]
         node.setup(ops_name, ops_prior, hyper_params=hyper_params)
 
@@ -332,7 +332,7 @@ def transform(
     parent = node.parent
 
     insert_node = Node(depth=node.depth, parent=parent)
-    insert_op = random.choices(ops_name_lst, ops_weight_lst, k=1)
+    insert_op = random.choices(ops_name_lst, ops_weight_lst, k=1)[0]
     insert_node.setup(insert_op, ops_priors[insert_op], hyper_params=hyper_params)
 
     if parent:
@@ -389,7 +389,7 @@ def reassign_op(
 
     # store the original children and re-setup the `node`
     old_left, old_right = node.left, node.right
-    new_op = random.choices(ops_name_lst, ops_weight_lst, k=1)
+    new_op = random.choices(ops_name_lst, ops_weight_lst, k=1)[0]
     node.setup(new_op, ops_priors[new_op], hyper_params=hyper_params)
 
     new_type = node.node_type

@@ -16,7 +16,7 @@ initialized in `prior.py` by their specified initialization functions.
 
 
 # a linear operator with default `a` = 1 and `b` = 0 (i.e. identity operation)
-def linear_op(operand: np.ndarray, **params: Dict[str, float]) -> np.ndarray:
+def linear_op(operand: np.ndarray, **params) -> np.ndarray:
     a, b = params.get("a", 1.0), params.get("b", 0.0)
     return a * operand + b
 
