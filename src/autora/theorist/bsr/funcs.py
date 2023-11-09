@@ -213,7 +213,7 @@ def grow(
     ops_weight_lst: List[float],
     ops_priors: Dict[str, Dict],
     n_feature: int = 1,
-    **hyper_params
+    **hyper_params,
 ):
     """
     ACTION 2: Grow represents the action of growing a subtree from a given `node`
@@ -232,7 +232,7 @@ def grow(
     if depth > 0 and p < random.random():  # create leaf node
         node.setup(feature=random.randint(0, n_feature - 1))
     else:
-        ops_name = random.choices(ops_name_lst, ops_weight_lst, k=1)
+        ops_name = random.choices(ops_name_lst, ops_weight_lst, k=1)[0]
         ops_prior = ops_priors[ops_name]
         node.setup(ops_name, ops_prior, hyper_params=hyper_params)
 
@@ -243,7 +243,7 @@ def grow(
             ops_weight_lst,
             ops_priors,
             n_feature,
-            **hyper_params
+            **hyper_params,
         )
         if node.node_type == NodeType.BINARY:
             grow(
@@ -252,7 +252,7 @@ def grow(
                 ops_weight_lst,
                 ops_priors,
                 n_feature,
-                **hyper_params
+                **hyper_params,
             )
 
 
@@ -310,7 +310,7 @@ def transform(
     ops_weight_lst: List[float],
     ops_priors: Dict[str, Dict],
     n_feature: int = 1,
-    **hyper_params: Dict
+    **hyper_params: Dict,
 ) -> Node:
     """
     ACTION 5: Transform inserts a middle node between the picked `node` and its
@@ -332,7 +332,7 @@ def transform(
     parent = node.parent
 
     insert_node = Node(depth=node.depth, parent=parent)
-    insert_op = random.choices(ops_name_lst, ops_weight_lst, k=1)
+    insert_op = random.choices(ops_name_lst, ops_weight_lst, k=1)[0]
     insert_node.setup(insert_op, ops_priors[insert_op], hyper_params=hyper_params)
 
     if parent:
@@ -352,7 +352,7 @@ def transform(
             ops_weight_lst,
             ops_priors,
             n_feature,
-            **hyper_params
+            **hyper_params,
         )
 
     # make sure the depth property is updated correctly
@@ -367,7 +367,7 @@ def reassign_op(
     ops_weight_lst: List[float],
     ops_priors: Dict[str, Dict],
     n_feature: int = 1,
-    **hyper_params: Dict
+    **hyper_params: Dict,
 ):
     """
     ACTION 6: Re-assign action uniformly picks a non-terminal node, and assign a new operator.
@@ -389,7 +389,7 @@ def reassign_op(
 
     # store the original children and re-setup the `node`
     old_left, old_right = node.left, node.right
-    new_op = random.choices(ops_name_lst, ops_weight_lst, k=1)
+    new_op = random.choices(ops_name_lst, ops_weight_lst, k=1)[0]
     node.setup(new_op, ops_priors[new_op], hyper_params=hyper_params)
 
     new_type = node.node_type
@@ -404,7 +404,7 @@ def reassign_op(
             ops_weight_lst,
             ops_priors,
             n_feature,
-            **hyper_params
+            **hyper_params,
         )
     else:
         node.right = None
@@ -520,7 +520,7 @@ def prop(
     ops_weight_lst: List[float],
     ops_priors: Dict[str, Dict],
     n_feature: int = 1,
-    **hyper_params
+    **hyper_params,
 ):
     """
     Propose a new tree from an existing tree with root `node`.
@@ -573,7 +573,7 @@ def prop(
             ops_weight_lst,
             ops_priors,
             n_feature,
-            **hyper_params
+            **hyper_params,
         )
         if grown_node.node_type == NodeType.LEAF:
             q = q_inv = 1
@@ -689,7 +689,7 @@ def prop(
             ops_weight_lst,
             ops_priors,
             n_feature,
-            **hyper_params
+            **hyper_params,
         )
 
         if inserted_node.right:
@@ -738,7 +738,7 @@ def prop(
             ops_weight_lst,
             ops_priors,
             n_feature,
-            **hyper_params
+            **hyper_params,
         )
         new_type = reassign_node.node_type
         _, new_nterm_count, new_lt_count, _ = _get_tree_classified_counts(new_node)

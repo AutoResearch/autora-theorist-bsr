@@ -21,6 +21,16 @@ dev = [
     "autora-core[dev]"
 ]
 
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+mypy_path="./src"
+
+[[tool.mypy.overrides]]
+module = ["matplotlib.*", "sklearn.*", "pandas.*", "numpy.*","scipy.*"]
+ignore_missing_imports=true
+
 [project.urls]
 homepage = "http://www.empiricalresearch.ai"
 repository = "https://github.com/AutoResearch/autora-theorist-bsr"
